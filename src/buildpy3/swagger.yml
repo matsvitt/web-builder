@@ -1,0 +1,38 @@
+swagger: '2.0'
+info:
+  title: File Upload Service
+  description: REST API for uploading files
+  version: '1.0'
+basePath: /v1
+tags:
+  - name: upload
+    description: Operations related to file upload
+paths:
+  /upload:
+    post:
+      tags:
+        - upload
+      summary: Uploads a file
+      consumes:
+        - multipart/form-data
+      parameters:
+        - name: file
+          in: formData
+          type: file
+          required: true
+          description: The file to upload
+        - name: file_type
+          in: formData
+          type: string
+          required: true
+          description: The type of the file
+        - name: period
+          in: formData
+          type: string
+          required: true
+          description: The period of the file in format "YYYYMM"
+      responses:
+        200:
+          description: File uploaded successfully
+        400:
+          description: Bad Request - The uploaded file format is invalid
