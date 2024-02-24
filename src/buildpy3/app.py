@@ -38,18 +38,21 @@ def webhook():
         
         # Extract relevant information from the payload
         repository_name = payload['repository']['full_name']
-        action = payload['action']
-        sender = payload['sender']['login']
+
+        print(payload)
+
+        # action = payload['action']
+        # sender = payload['sender']['login']
         
-        # Perform actions based on the event
-        if action == 'push':
-            print(f"Repository {repository_name} was pushed to by {sender}.")
-            # Perform actions you want to take on push event
-        elif action == 'pull_request':
-            print(f"Pull request on repository {repository_name} was opened by {sender}.")
-            # Perform actions you want to take on pull request event
-        else:
-            print(f"Unhandled action: {action}")
+        # # Perform actions based on the event
+        # if action == 'push':
+        #     print(f"Repository {repository_name} was pushed to by {sender}.")
+        #     # Perform actions you want to take on push event
+        # elif action == 'pull_request':
+        #     print(f"Pull request on repository {repository_name} was opened by {sender}.")
+        #     # Perform actions you want to take on pull request event
+        # else:
+        #     print(f"Unhandled action: {action}")
         
         # Return a success response to GitHub
         print("returning")
