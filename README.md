@@ -142,3 +142,5 @@ Project Link: [https://github.com/gotofritz/german-learning](https://github.com/
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+ git add -A .
+
