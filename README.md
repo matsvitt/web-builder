@@ -141,3 +141,4 @@ Fritz, [@your_name@mastodon.social](https://mastodon.social/@your_name)
 Project Link: [https://github.com/gotofritz/german-learning](https://github.com/gotofritz/german-learning)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+
