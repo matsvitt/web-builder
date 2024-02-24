@@ -1,6 +1,9 @@
 # Use the official Python image from Docker Hub
 FROM python:3.11
 
+
+ENV PYTHONUNBUFFERED 1
+
 # Set the working directory inside the container
 WORKDIR /app
 
