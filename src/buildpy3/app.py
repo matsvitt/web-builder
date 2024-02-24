@@ -26,6 +26,37 @@ def validate_file(file):
 def buildproject():
     return jsonify({'message': 'Docker build service'})
 
+#asd
+
+@app.route('/webhook', methods=['POST'])
+def webhook():
+    # Verify the request is coming from GitHub by checking the User-Agent header
+    user_agent = request.headers.get('User-Agent')
+    if 'GitHub-Hookshot' in user_agent:
+        # Parse the JSON payload from the request
+        payload = request.json
+        
+        # Extract relevant information from the payload
+        repository_name = payload['repository']['full_name']
+        action = payload['action']
+        sender = payload['sender']['login']
+        
+        # Perform actions based on the event
+        if action == 'push':
+            print(f"Repository {repository_name} was pushed to by {sender}.")
+            # Perform actions you want to take on push event
+        elif action == 'pull_request':
+            print(f"Pull request on repository {repository_name} was opened by {sender}.")
+            # Perform actions you want to take on pull request event
+        else:
+            print(f"Unhandled action: {action}")
+        
+        # Return a success response to GitHub
+        print("returning")
+        return jsonify({'message': 'Received webhook event successfully'}), 200
+    else:
+        # If the request doesn't come from GitHub, return a 403 Forbidden response
+        return jsonify({'error': 'Forbidden'}), 403
 
 
 @app.route('/v1/upload', methods=['POST'])
