@@ -24,6 +24,7 @@ def validate_file(file):
 
 @app.route('/v1/build', methods=['GET'])
 def buildproject():
+    print("build called")
     return jsonify({'message': 'Docker build service'})
 
 #asd
