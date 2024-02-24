@@ -9,11 +9,14 @@ logging.basicConfig(level=logging.INFO)
 # Log to console by default
 console_handler = logging.StreamHandler()
 console_handler.setLevel(logging.INFO)
-app.logger.addHandler(console_handler)
+
 
 
 
 app = Flask(__name__)
+
+app.logger.addHandler(console_handler)
+
 
 # Define Swagger UI blueprint
 SWAGGER_URL = '/swagger'
