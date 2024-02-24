@@ -1,5 +1,17 @@
 from flask import Flask, request, jsonify
 from flask_swagger_ui import get_swaggerui_blueprint
+import logging
+
+
+# Setup logging
+logging.basicConfig(level=logging.INFO)
+
+# Log to console by default
+console_handler = logging.StreamHandler()
+console_handler.setLevel(logging.INFO)
+app.logger.addHandler(console_handler)
+
+
 
 app = Flask(__name__)
 
@@ -24,13 +36,14 @@ def validate_file(file):
 
 @app.route('/v1/build', methods=['GET'])
 def buildproject():
-    print("build called")
+    logging.warn("build called")
     return jsonify({'message': 'Docker build service'})
 
 #asd
 
 @app.route('/webhook', methods=['POST'])
 def webhook():
+    logging.warn("webhook called")
     # Verify the request is coming from GitHub by checking the User-Agent header
     user_agent = request.headers.get('User-Agent')
     if 'GitHub-Hookshot' in user_agent:
@@ -40,7 +53,7 @@ def webhook():
         # Extract relevant information from the payload
         repository_name = payload['repository']['full_name']
 
-        print(payload)
+        logging.warn(payload)
 
         # action = payload['action']
         # sender = payload['sender']['login']
