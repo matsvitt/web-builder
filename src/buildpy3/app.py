@@ -70,7 +70,7 @@ def verify_signature(payload, signature):
     mac = hmac.new(WEBHOOK_SECRET.encode(), msg=payload, digestmod=hashlib.sha1)
     return hmac.compare_digest(mac.hexdigest(), signature)
 
-#@app.route('/webhook', methods=['POST'])###
+#@app.route('/webhook', methods=['POST'])####
 @ns.route('/github/<string:param>',methods=['POST'])
 @api.doc(params={'param': 'A repo to build'})
 class Webhook(Resource):
