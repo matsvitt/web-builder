@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify,  make_response
 #from flask_swagger_ui import get_swaggerui_blueprint
 from flask_restx import Api, Resource
 import logging
@@ -47,7 +47,7 @@ def validate_file(file):
 class PingerBuilder(Resource):
     def get(self):
         logging.warn("ping called")
-        return jsonify({'message': 'Docker build service ping'}), 200
+        return make_response(jsonify({'message': 'Docker build service ping'}), 200)
 
 
 @ns.route('/<string:param>')
@@ -55,7 +55,7 @@ class PingerBuilder(Resource):
 class Builder(Resource):
     def post(self, param):
         logging.warn(f"build called with param: {param}")
-        return jsonify({'message': 'Docker build service'}), 200
+        return make_response(jsonify({'message': 'Docker build service'}), 200)
 
 
 global WEBHOOK_SECRET
@@ -93,7 +93,7 @@ class Webhook(Resource):
         logging.warn(f'Payload: {payload}')
 
         # Respond to GitHub that the webhook was successfully received
-        return jsonify({'message': 'Webhook received!'}), 200
+        return make_response(jsonify({'message': 'Webhook received!'}), 200)
 
 
 
