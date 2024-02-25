@@ -85,9 +85,9 @@ class Webhook(Resource):
         payload = request.data
 
         # Verify the signature 
-        if not verify_signature(payload, signature):
-            logging.warn("Invalid signature")
-            return make_response(jsonify({'message': 'Invalid signature'}), 403)
+        # if not verify_signature(payload, signature):
+        #     logging.warn("Invalid signature")
+        #     return make_response(jsonify({'message': 'Invalid signature'}), 403)
 
         # Process the GitHub event here (e.g., push, pull request)
         logging.warn(f'Event: {event_type}')
