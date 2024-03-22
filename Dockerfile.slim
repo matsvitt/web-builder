@@ -27,7 +27,8 @@ COPY . /app
 EXPOSE 5000
 
 # Command to run the Flask app using Gunicorn
-CMD ["poetry", "run", "gunicorn", "-b", "0.0.0.0:5000", "src.buildpy3.app:app"]
+#CMD ["poetry", "run", "gunicorn", "-b", "0.0.0.0:5000", "src.buildpy3.app:app"]
+CMD ["python", "run", "gunicorn", "-b", "0.0.0.0:5000", "src.buildpy3.app:app"]
 
 
 #COPY annapurna ./annapurna
