@@ -114,9 +114,9 @@ class Webhook(Resource):
         logging.warn(_payload.keys())
         
         rep_name = _payload["repository"]["full_name"]
-        default_branch=pay_payloadload["repository"]["default_branch"]
-        main_branch=_payload["repository"]["main_branch"]
-        logging.warn(f"{rep_name} {default_branch} {main_branch}")
+        default_branch=_payload["repository"]["default_branch"]
+        master_branch=_payload["repository"]["master_branch"]
+        logging.warn(f"{rep_name} {default_branch} {master_branch}")
 
         # Respond to GitHub that the webhook was successfully received
         return make_response(jsonify({'message': 'Webhook received!'}), 200)

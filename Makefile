@@ -42,14 +42,14 @@ qa-local: format qa ## for local development (before checking in). Formats code 
 
 
 
-rebuild: build restart run
+rebuild: build restart rund
 
 
 restart:
 	docker stop build
 	docker rm build
 
-run:
+rund:
 	docker run -d -p 5000:5000 --network pickaxe --name build webbuilder
 
 build:
