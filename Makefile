@@ -50,7 +50,10 @@ restart:
 	docker rm build
 
 rund:
-	docker run -d -p 5000:5000 --network pickaxe --name build webbuilder
+	docker run -d -p 5000:5000 --network pickaxe -v /home/matthias/.ssh:/ssh -v /var/run/docker.sock:/var/run/docker.sock --name build webbuilder
+
+
+rerun: restart rund
 
 build:
 	docker build -t webbuilder .

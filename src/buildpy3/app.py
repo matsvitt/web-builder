@@ -5,10 +5,18 @@ import logging
 import hmac
 import hashlib
 import json
-
+import asyncio
 
 
 from .dockerutil import rebuild
+
+async def xebuild(a,b):
+    try:
+        rebuild(a,b)
+    except Exception as ex:
+        pass
+
+    
 
 # Setup logging
 logging.basicConfig(level=logging.INFO)
@@ -118,6 +126,14 @@ class Webhook(Resource):
         master_branch=_payload["repository"]["master_branch"]
         logging.warn(f"{rep_name} {default_branch} {master_branch}")
 
+        #        git_url = f"git@github.com:{rep_name}.git"
+        git_url = f"git@github.com:{rep_name}.git"
+        ssh_key_path = '/ssh/id_rsanop'
+        logging.warn(f"CLoning {git_url}")
+        asyncio.run(xebuild(git_url,ssh_key_path))
+
+        
+        
         # Respond to GitHub that the webhook was successfully received
         return make_response(jsonify({'message': 'Webhook received!'}), 200)
 

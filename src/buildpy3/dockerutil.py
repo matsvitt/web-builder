@@ -2,6 +2,7 @@ import docker
 import git
 import os
 import json
+import logging
 
 def build_and_stop_containers(git_url, ssh_key_path):
     print("Clone the git repository using SSH key")
@@ -14,7 +15,7 @@ def build_and_stop_containers(git_url, ssh_key_path):
         os.system(f'rm -rf ./{project_dir}')
     
     
-    
+    logging.warn("Git clone")
     git.Repo.clone_from(git_url, project_dir, env={'GIT_SSH_COMMAND': f'ssh -i {ssh_key_path}'})
     
     docker_options={}
@@ -33,6 +34,7 @@ def build_and_stop_containers(git_url, ssh_key_path):
     
     
     # Get Docker client
+    logging.warn("get docker client")
     client = docker.from_env()
     
     # Build the Docker image from the Dockerfile in the cloned repository
@@ -54,21 +56,21 @@ def build_and_stop_containers(git_url, ssh_key_path):
             #os.system('rm -rf webbuilder')
 
     if rc:
-        container = client.containers.get(container_name)
+#        container = client.containers.get(container_name)
 
-        if container is not None:
-            container.stop()
+#        if container is not None:
+#            container.stop()
             # Remove the container
-            container.remove()
+#            container.remove()
 
                 
         #Find containers using the same image and stop them
         for container in client.containers.list():
             print(container.image.tags)
-            if f"{project_dir}" in container.image.tags:
-                print(f"will stop any {project_dir} containers")
+            if container_name in container.image.tags:
+                logging.warn(f"will stop any {project_dir} containers {container_name}")
                 container.stop()
-
+                container.remove
     return docker_options
 
 # Example usage:
@@ -99,11 +101,13 @@ def start_container(image_name, docker_options):
     except docker.errors.APIError as e:
         print(f"Error starting container: {e}")
 
+import logging
 
 def rebuild(git_url,ssh_key_path):
     try:
         project_dir = git_url.split('/')[-1].split('.')[0]
-        options = build_and_stop_containers(git_url, ssh_key_path)  
+        options = build_and_stop_containers(git_url, ssh_key_path)
+        logging.warn(f"Start container")
         start_container(f"{project_dir}", options)
     except Exception as e:
         print(f"Error: {e}")
