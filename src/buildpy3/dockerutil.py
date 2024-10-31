@@ -4,6 +4,25 @@ import os
 import json
 import logging
 
+
+
+def check_docker():
+    client = docker.from_env()
+    
+    for container in client.containers.list():
+        print(container.__dict__)
+        print(container.image.tags)
+        print(container.name)
+        print(container.status)
+        print(container.short_id)
+        print(container.id)
+        print(container.attrs)
+        print(container.logs())
+        print(container.top())
+        print(container.stats())
+        
+    
+
 def build_and_stop_containers(git_url, ssh_key_path):
     print("Clone the git repository using SSH key")
     
@@ -67,7 +86,7 @@ def build_and_stop_containers(git_url, ssh_key_path):
         #Find containers using the same image and stop them
         for container in client.containers.list():
             print(container.image.tags)
-            if container_name in container.image.tags:
+            if container_name in container.name:
                 logging.warn(f"will stop any {project_dir} containers {container_name}")
                 container.stop()
                 container.remove
@@ -117,8 +136,9 @@ if __name__ == "__main__":
     git_url = 'git@github.com:matsvitt/plainagile.git'
     #ssh_key_path = '/Users/matthiasvitt/.ssh/id_rsanop'
     ssh_key_path = '/Users/matthiasvitt/.ssh/id_rsanopasswd'  
-    try:  
-        options = build_and_stop_containers(git_url, ssh_key_path)  
-        start_container("plainagile", options)
-    except Exception as e:
-        print(f"Error: {e}")
+    check_docker()
+    # try:  
+    #     options = build_and_stop_containers(git_url, ssh_key_path)  
+    #     start_container("plainagile", options)
+    # except Exception as e:
+    #     print(f"Error: {e}")
