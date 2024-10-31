@@ -76,6 +76,16 @@ def verify_signature(payload, signature):
 class Webhook(Resource):
     def post(self, param):
         logging.warn(f"webhook called: {param}")
+
+        if "dockerfile" in request.args:
+            dfile=request.args.get("dockerfile")
+            logging.warn(f"Running {dfile}")
+
+        if "action" in request.args:
+            daction =request.args.get("action")
+            logging.warn(f"Running {daction}")
+
+            
         # GitHub sends the signature in the header 'X-Hub-Signature'
         signature = request.headers.get('X-Hub-Signature')
 
