@@ -49,3 +49,6 @@ build:
 
 run.server:
 	gunicorn --bind 0.0.0.0:5001 wsgi:app
+
+run:
+	poetry run gunicorn -b 0.0.0.0:5001 src.buildpy3.app:app

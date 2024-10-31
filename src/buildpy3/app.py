@@ -4,7 +4,11 @@ from flask_restx import Api, Resource
 import logging
 import hmac
 import hashlib
+import json
 
+
+
+from .dockerutil import rebuild
 
 # Setup logging
 logging.basicConfig(level=logging.INFO)
@@ -101,7 +105,18 @@ class Webhook(Resource):
 
         # Process the GitHub event here (e.g., push, pull request)
         logging.warn(f'Event: {event_type}')
-        logging.warn(f'Payload: {payload}')
+        
+        _payload = json.loads(payload.decode())
+        
+        logging.warn(type(_payload))
+        logging.warn(f'Payload: {_payload}')
+        
+        logging.warn(_payload.keys())
+        
+        rep_name = _payload["repository"]["full_name"]
+        default_branch=pay_payloadload["repository"]["default_branch"]
+        main_branch=_payload["repository"]["main_branch"]
+        logging.warn(f"{rep_name} {default_branch} {main_branch}")
 
         # Respond to GitHub that the webhook was successfully received
         return make_response(jsonify({'message': 'Webhook received!'}), 200)
