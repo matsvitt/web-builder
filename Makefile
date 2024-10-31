@@ -41,6 +41,14 @@ qa-local: format qa ## for local development (before checking in). Formats code 
 .PHONY: qa-local
 
 
+
+rebuild: build restart run
+
+
+restart:
+	docker stop build
+	docker rm build
+
 run:
 	docker run -d -p 5000:5000 --network pickaxe --name build webbuilder
 
